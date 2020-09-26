@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const Users = require("./routes/users");
+
 const app = express();
 const PORT = 8080;
 
@@ -22,6 +24,9 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB successfully connected");
 });
+
+app.use("/users", Users);
+
 app.listen(PORT, () => {
   console.log("Server is running on Port: " + PORT);
 });
