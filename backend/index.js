@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const Accounts = require("./routes/accounts");
+const Categories = require("./routes/categories");
 const Users = require("./routes/users");
 
 const app = express();
@@ -25,6 +27,8 @@ connection.once("open", () => {
   console.log("MongoDB successfully connected");
 });
 
+app.use("/accounts", Accounts);
+app.use("/categories", Categories);
 app.use("/users", Users);
 
 app.listen(PORT, () => {

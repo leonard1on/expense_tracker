@@ -13,6 +13,6 @@ const accountSchema = new Schema(
   }
 );
 
-const Account = mongoose.model("User", accountSchema);
+const Account = mongoose.model("Account", accountSchema);
 
 module.exports = Account;
