@@ -12,8 +12,12 @@ function App() {
     <Router>
       <NavBar />
       <br />
-      <Route path="/" exact component={Home} />
-      <Route path="/accounts" exact component={Accounts} />
+      <Route path="/" exact>
+        <Home />
+      </Route>
+      <Route path="/accounts" exact>
+        <Accounts />
+      </Route>
     </Router>
   );
 }
