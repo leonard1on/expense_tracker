@@ -1,6 +1,8 @@
 import React from "react";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
+import LoginButton from "../Components/LoginButton";
+
 const NavBar = (props) => {
   return (
     <div>
@@ -11,6 +13,9 @@ const NavBar = (props) => {
             <Link to="/accounts" className="nav-link">
               Accounts
             </Link>
+          </NavItem>
+          <NavItem>
+            <LoginButton />
           </NavItem>
         </Nav>
       </Navbar>
