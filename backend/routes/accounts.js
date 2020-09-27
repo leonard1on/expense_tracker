@@ -9,9 +9,10 @@ router.route("/").get((req, res) => {
 
 router.route("/add").post((req, res) => {
   const userId = req.body.userId;
+  const type = req.body.type;
   const name = req.body.name;
   const money = req.body.money;
-  const newAccount = new Account({ userId, name, money });
+  const newAccount = new Account({ userId, type, name, money });
 
   newAccount
     .save()
@@ -35,6 +36,7 @@ router.route("/update/:id").post((req, res) => {
   Account.findById(req.params.id)
     .then((account) => {
       account.userId = req.body.userId;
+      account.type = req.body.type;
       account.name = req.body.name;
       account.money = req.body.money;
 

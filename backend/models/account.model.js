@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const accountSchema = new Schema(
   {
     userId: { type: String, required: true },
+    type: { type: String, required: true },
     name: { type: String, required: true },
     money: { type: Number, required: true },
   },
