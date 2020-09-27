@@ -57,17 +57,29 @@ const Accounts = () => {
   const modToggle = () => setModifyModal(!modifyModal);
 
   const onChangeHandlerMod = (event) => {
-    setNewAccount((prev) => ({
+    setModAccount((prev) => ({
       ...prev,
       [event.name]: event.value,
     }));
   };
 
   const setTypeMod = (data) => {
-    setNewAccount((prev) => ({
+    setModAccount((prev) => ({
       ...prev,
       type: data,
     }));
+  };
+
+  const modifyAccount = () => {
+    axios
+      .post(
+        "http://localhost:8080/accounts/update/" + modAccount._id,
+        modAccount
+      )
+      .then((res) => {
+        console.log(res.data);
+        listAccounts();
+      });
   };
 
   // List Account
@@ -148,6 +160,7 @@ const Accounts = () => {
             color="primary"
             className="Button"
             onClick={() => {
+              modifyAccount();
               modToggle();
             }}
           >
@@ -165,18 +178,19 @@ const Accounts = () => {
         </ModalFooter>
       </Modal>
       <Button onClick={toggle}>Hi</Button>
-      <Button onClick={modToggle}>Hi2</Button>
       <Table>
         <colgroup>
-          <col span="1" style={{ width: "40%" }} />
           <col span="1" style={{ width: "35%" }} />
-          <col span="1" style={{ width: "25%" }} />
+          <col span="1" style={{ width: "30%" }} />
+          <col span="1" style={{ width: "20%" }} />
+          <col span="1" style={{ width: "15%" }} />
         </colgroup>
         <thead>
           <tr>
             <th>Account Name</th>
             <th>Account Type</th>
             <th>Current Amount</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -186,6 +200,16 @@ const Accounts = () => {
                 <td>{acc.name}</td>
                 <td>{acc.type}</td>
                 <td>{acc.money}</td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      setModAccount(acc);
+                      modToggle();
+                    }}
+                  >
+                    Hi2
+                  </Button>
+                </td>
               </tr>
             );
           })}
