@@ -11,7 +11,6 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <br />
       <Route path="/" exact>
         <Home />
       </Route>

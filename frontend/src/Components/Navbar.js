@@ -1,17 +1,19 @@
 import React from "react";
-import { Navbar, NavItem } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
-
-const NavBar = () => {
+import "bootstrap/dist/css/bootstrap.css";
+const NavBar = (props) => {
   return (
     <div>
-      <Navbar>
-        <NavItem>
-          <Link to="/">Home</Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/accounts">Accounts</Link>
-        </NavItem>
+      <Navbar color="dark" dark expand="md">
+        <NavbarBrand href="/">Expense Tracker</NavbarBrand>
+        <Nav className="mr-auto" navbar>
+          <NavItem>
+            <Link to="/accounts" className="nav-link">
+              Accounts
+            </Link>
+          </NavItem>
+        </Nav>
       </Navbar>
     </div>
   );
