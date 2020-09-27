@@ -19,6 +19,7 @@ const Accounts = () => {
 
   const [newAccount, setNewAccount] = useState(defaultAccount);
   const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
   const onChangeHandler = (event) => {
     setNewAccount((prev) => ({
@@ -33,9 +34,32 @@ const Accounts = () => {
 
   return (
     <Container>
-      <Modal size="lg" isOpen></Modal>
-      <AccountForm account={newAccount} onChangeHandler={onChangeHandler} />
-      <Button className="Button">Create Account</Button>
+      <Modal
+        size="lg"
+        isOpen={modal}
+        toggle={toggle}
+        onClosed={() => setNewAccount(defaultAccount)}
+      >
+        <ModalHeader toggle={toggle}>Create New Account</ModalHeader>
+        <ModalBody>
+          <AccountForm account={newAccount} onChangeHandler={onChangeHandler} />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" className="Button" onClick={() => {}}>
+            Create Account
+          </Button>
+          <Button
+            color="danger"
+            className="Button"
+            onClick={() => {
+              toggle();
+            }}
+          >
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Button onClick={toggle}>Hi</Button>
     </Container>
   );
 };
