@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Container, Label, Col, Row, Input, Button } from "reactstrap";
+import {
+  Container,
+  Button,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from "reactstrap";
+import AccountForm from "../Components/AccountForm";
 
 const Accounts = () => {
   const defaultAccount = {
@@ -10,6 +18,7 @@ const Accounts = () => {
   };
 
   const [newAccount, setNewAccount] = useState(defaultAccount);
+  const [modal, setModal] = useState(false);
 
   const onChangeHandler = (event) => {
     setNewAccount((prev) => ({
@@ -24,45 +33,9 @@ const Accounts = () => {
 
   return (
     <Container>
-      <Row>
-        <Col>
-          <Label>Type of Account</Label>
-          <Input
-            type="text"
-            name="type"
-            value={newAccount.type}
-            id="type"
-            placeholder="Cash, Credit, Debit, etc"
-            onChange={(event) => onChangeHandler(event.currentTarget)}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Label>Account Name</Label>
-          <Input
-            type="text"
-            name="name"
-            value={newAccount.name}
-            id="name"
-            placeholder="BAC"
-            onChange={(event) => onChangeHandler(event.currentTarget)}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Label>Amount of Money</Label>
-          <Input
-            type="text"
-            name="money"
-            value={newAccount.money}
-            id="money"
-            placeholder="1000"
-            onChange={(event) => onChangeHandler(event.currentTarget)}
-          />
-        </Col>
-      </Row>
+      <Modal size="lg" isOpen></Modal>
+      <AccountForm account={newAccount} onChangeHandler={onChangeHandler} />
+      <Button className="Button">Create Account</Button>
     </Container>
   );
 };
