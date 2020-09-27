@@ -81,6 +81,17 @@ const Accounts = () => {
         listAccounts();
       });
   };
+  // Delete Account State
+  //const [selectedAccount, setSelectedAccount] = useState(defaultAccount);
+
+  const deleteAccount = (acc, index) => {
+    axios.delete("http://localhost:8080/accounts/" + acc._id).then((res) => {
+      console.log(res);
+      const refAccounts = [...accounts];
+      refAccounts.splice(index, 1);
+      setAccounts(refAccounts);
+    });
+  };
 
   // List Account
   const [accounts, setAccounts] = useState([]);
@@ -194,7 +205,7 @@ const Accounts = () => {
           </tr>
         </thead>
         <tbody>
-          {accounts.map((acc) => {
+          {accounts.map((acc, index) => {
             return (
               <tr key={acc._id}>
                 <td>{acc.name}</td>
@@ -202,12 +213,21 @@ const Accounts = () => {
                 <td>{acc.money}</td>
                 <td>
                   <Button
+                    color="success"
                     onClick={() => {
                       setModAccount(acc);
                       modToggle();
                     }}
                   >
-                    Hi2
+                    Modify
+                  </Button>
+                  <Button
+                    color="danger"
+                    onClick={() => {
+                      deleteAccount(acc, index);
+                    }}
+                  >
+                    Delete
                   </Button>
                 </td>
               </tr>
