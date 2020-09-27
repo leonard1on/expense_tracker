@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Container,
   Button,
@@ -11,8 +12,8 @@ import AccountForm from "../Components/AccountForm";
 
 const Accounts = () => {
   const defaultAccount = {
-    userId: "",
-    type: "",
+    userId: "123141241",
+    type: "Cash",
     name: "",
     money: 0,
   };
@@ -26,6 +27,25 @@ const Accounts = () => {
       ...prev,
       [event.name]: event.value,
     }));
+  };
+
+  const setType = (data) => {
+    setNewAccount((prev) => ({
+      ...prev,
+      type: data,
+    }));
+  };
+
+  const createAccount = () => {
+    console.log(newAccount);
+    axios
+      .post("http://localhost:8080/accounts/add", newAccount)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
   };
 
   useEffect(() => {
@@ -42,10 +62,21 @@ const Accounts = () => {
       >
         <ModalHeader toggle={toggle}>Create New Account</ModalHeader>
         <ModalBody>
-          <AccountForm account={newAccount} onChangeHandler={onChangeHandler} />
+          <AccountForm
+            account={newAccount}
+            onChangeHandler={onChangeHandler}
+            typeHandler={setType}
+          />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" className="Button" onClick={() => {}}>
+          <Button
+            color="primary"
+            className="Button"
+            onClick={() => {
+              createAccount();
+              toggle();
+            }}
+          >
             Create Account
           </Button>
           <Button

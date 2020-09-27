@@ -1,22 +1,21 @@
 import React from "react";
-import { Label, Col, Row, Input } from "reactstrap";
+import {
+  Label,
+  Col,
+  Row,
+  Input,
+  Form,
+  UncontrolledButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
-const AccountForm = ({ account, onChangeHandler }) => {
+const AccountForm = ({ account, onChangeHandler, typeHandler }) => {
+  const accountTypes = ["Cash", "Credit Card", "Debit Card", "Paypal", "Other"];
+
   return (
-    <div>
-      <Row>
-        <Col>
-          <Label>Type of Account</Label>
-          <Input
-            type="text"
-            name="type"
-            value={account.type}
-            id="type"
-            placeholder="Cash, Credit, Debit, etc"
-            onChange={(event) => onChangeHandler(event.currentTarget)}
-          />
-        </Col>
-      </Row>
+    <Form>
       <Row>
         <Col>
           <Label>Account Name</Label>
@@ -31,7 +30,29 @@ const AccountForm = ({ account, onChangeHandler }) => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col xs="3">
+          <Label>Account Type</Label>
+          <br />
+          <UncontrolledButtonDropdown>
+            <DropdownToggle caret color="primary">
+              {account.type}
+            </DropdownToggle>
+            <DropdownMenu>
+              {accountTypes.map((acc) => {
+                return (
+                  <DropdownItem
+                    onClick={() => {
+                      typeHandler(acc);
+                    }}
+                  >
+                    {acc}
+                  </DropdownItem>
+                );
+              })}
+            </DropdownMenu>
+          </UncontrolledButtonDropdown>
+        </Col>
+        <Col xs="9">
           <Label>Amount of Money</Label>
           <Input
             type="text"
@@ -43,7 +64,7 @@ const AccountForm = ({ account, onChangeHandler }) => {
           />
         </Col>
       </Row>
-    </div>
+    </Form>
   );
 };
 
