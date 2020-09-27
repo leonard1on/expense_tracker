@@ -1,9 +1,13 @@
 import React from "react";
-import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, Spinner } from "reactstrap";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../Components/LoginButton";
+import LogoutButton from "../Components/LogoutButton";
 
 const NavBar = (props) => {
+  const { loginWithRedirect, logout, isLoading, isAuthenticated } = useAuth0();
+
   return (
     <div>
       <Navbar color="dark" dark expand="md">
@@ -14,9 +18,13 @@ const NavBar = (props) => {
               Accounts
             </Link>
           </NavItem>
-          <NavItem>
+          {isLoading ? (
+            <Spinner color="primary" />
+          ) : isAuthenticated ? (
+            <LogoutButton />
+          ) : (
             <LoginButton />
-          </NavItem>
+          )}
         </Nav>
       </Navbar>
     </div>
