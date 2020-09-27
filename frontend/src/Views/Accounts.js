@@ -24,9 +24,6 @@ const Accounts = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  // List Account
-  const [accounts, setAccounts] = useState([]);
-
   const onChangeHandler = (event) => {
     setNewAccount((prev) => ({
       ...prev,
@@ -46,6 +43,7 @@ const Accounts = () => {
     axios
       .post("http://localhost:8080/accounts/add", newAccount)
       .then((res) => {
+        listAccounts();
         console.log(res.data);
       })
       .catch((err) => {
@@ -53,11 +51,37 @@ const Accounts = () => {
       });
   };
 
+  // Modify Account States
+  const [modAccount, setModAccount] = useState(defaultAccount);
+  const [modifyModal, setModifyModal] = useState(false);
+  const modToggle = () => setModifyModal(!modifyModal);
+
+  const onChangeHandlerMod = (event) => {
+    setNewAccount((prev) => ({
+      ...prev,
+      [event.name]: event.value,
+    }));
+  };
+
+  const setTypeMod = (data) => {
+    setNewAccount((prev) => ({
+      ...prev,
+      type: data,
+    }));
+  };
+
+  // List Account
+  const [accounts, setAccounts] = useState([]);
+
   useEffect(() => {
     console.log(accounts);
   }, [accounts]);
 
   useEffect(() => {
+    listAccounts();
+  }, []);
+
+  const listAccounts = () => {
     axios.get("http://localhost:8080/accounts/").then((res) => {
       setAccounts(
         res.data.map((acc) => {
@@ -65,7 +89,7 @@ const Accounts = () => {
         })
       );
     });
-  }, []);
+  };
 
   return (
     <Container>
@@ -105,7 +129,43 @@ const Accounts = () => {
           </Button>
         </ModalFooter>
       </Modal>
+      <Modal
+        size="lg"
+        isOpen={modifyModal}
+        toggle={modToggle}
+        onClosed={() => setModAccount(defaultAccount)}
+      >
+        <ModalHeader toggle={modToggle}>Modify Account</ModalHeader>
+        <ModalBody>
+          <AccountForm
+            account={modAccount}
+            onChangeHandler={onChangeHandlerMod}
+            typeHandler={setTypeMod}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            color="primary"
+            className="Button"
+            onClick={() => {
+              modToggle();
+            }}
+          >
+            Modify Account
+          </Button>
+          <Button
+            color="danger"
+            className="Button"
+            onClick={() => {
+              modToggle();
+            }}
+          >
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
       <Button onClick={toggle}>Hi</Button>
+      <Button onClick={modToggle}>Hi2</Button>
       <Table>
         <colgroup>
           <col span="1" style={{ width: "40%" }} />
