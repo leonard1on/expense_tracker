@@ -2,13 +2,19 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Home from "./Views/Home";
 import Accounts from "./Views/Accounts";
-
 import NavBar from "./Components/Navbar";
 
-function App() {
+const App = () => {
+  const { user, isLoading, isAuthenticated } = useAuth0();
+
+  if (isAuthenticated && !isLoading) {
+    console.log(user);
+  }
+
   return (
     <Router>
       <NavBar />
@@ -21,6 +27,6 @@ function App() {
       </Route>
     </Router>
   );
-}
+};
 
 export default App;

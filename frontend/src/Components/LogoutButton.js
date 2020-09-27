@@ -8,6 +8,7 @@ const LogoutButton = () => {
   return (
     <Button
       className="nav-link"
+      style={{ background: "none", border: "none" }}
       onClick={() => logout({ returnTo: window.location.origin })}
     >
       Log Out

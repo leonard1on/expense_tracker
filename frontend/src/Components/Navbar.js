@@ -6,13 +6,17 @@ import LoginButton from "../Components/LoginButton";
 import LogoutButton from "../Components/LogoutButton";
 
 const NavBar = (props) => {
-  const { loginWithRedirect, logout, isLoading, isAuthenticated } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
 
   return (
     <div>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/">Expense Tracker</NavbarBrand>
         <Nav className="mr-auto" navbar>
+          <NavItem>
+            <Link to="/" className="nav-link">
+              Expense Tracker
+            </Link>
+          </NavItem>
           <NavItem>
             <Link to="/accounts" className="nav-link">
               Accounts
