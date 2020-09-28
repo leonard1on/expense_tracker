@@ -26,6 +26,14 @@ router.route("/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/uid/:id").get((req, res) => {
+  Account.find()
+    .where("userId")
+    .equals(req.params.id)
+    .then((account) => res.json(account))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 router.route("/:id").delete((req, res) => {
   Account.findByIdAndDelete(req.params.id)
     .then(() => res.json("Account deleted successfully"))

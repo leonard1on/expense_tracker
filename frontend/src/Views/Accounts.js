@@ -15,7 +15,7 @@ import AccountForm from "../Components/AccountForm";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Accounts = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const defaultAccount = {
     userId: "",
     type: "Cash",
@@ -76,6 +76,7 @@ const Accounts = () => {
   };
 
   const modifyAccount = () => {
+    if (user.sub !== modAccount.userId) return;
     axios
       .post(
         "http://localhost:8080/accounts/update/" + modAccount._id,
@@ -90,6 +91,8 @@ const Accounts = () => {
   //const [selectedAccount, setSelectedAccount] = useState(defaultAccount);
 
   const deleteAccount = (acc, index) => {
+    if (user.sub !== modAccount.userId) return;
+
     axios.delete("http://localhost:8080/accounts/" + acc._id).then((res) => {
       console.log(res);
       const refAccounts = [...accounts];
@@ -110,7 +113,8 @@ const Accounts = () => {
   }, []);
 
   const listAccounts = () => {
-    axios.get("http://localhost:8080/accounts/").then((res) => {
+    if (!isAuthenticated) return;
+    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
         res.data.map((acc) => {
           return acc;
