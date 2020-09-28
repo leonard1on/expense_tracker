@@ -10,10 +10,12 @@ import {
   Table,
 } from "reactstrap";
 import AccountForm from "../Components/AccountForm";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Accounts = () => {
+  const { user } = useAuth0();
   const defaultAccount = {
-    userId: "123141241",
+    userId: "",
     type: "Cash",
     name: "",
     money: 0,
@@ -40,6 +42,7 @@ const Accounts = () => {
 
   const createAccount = () => {
     console.log(newAccount);
+    newAccount.userId = user.sub;
     axios
       .post("http://localhost:8080/accounts/add", newAccount)
       .then((res) => {
@@ -116,6 +119,7 @@ const Accounts = () => {
 
   return (
     <Container>
+      <h2>Accounts</h2>
       <Modal
         size="lg"
         isOpen={modal}
@@ -188,7 +192,9 @@ const Accounts = () => {
           </Button>
         </ModalFooter>
       </Modal>
-      <Button onClick={toggle}>Hi</Button>
+      <Button onClick={toggle} className="Add-Button">
+        +
+      </Button>
       <Table>
         <colgroup>
           <col span="1" style={{ width: "35%" }} />

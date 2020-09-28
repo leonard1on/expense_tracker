@@ -5,3 +5,21 @@
 .Button {
   margin-top: 8px;
 }
+
+.Add-Button {
+  position: fixed;
+  width: 4vw;
+  height: 4vw;
+  bottom: 2vw;
+  right: 2vw;
+  background-color: tomato !important;
+  border-color: transparent !important;
+  color: white;
+  border-radius: 100% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px #0004;
+  transition: 250ms !important;
+  font-size: x-large !important;
+}

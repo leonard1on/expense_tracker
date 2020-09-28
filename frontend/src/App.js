@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -14,7 +14,9 @@ const App = () => {
   if (isAuthenticated && !isLoading) {
     console.log(user);
   }
-
+  useEffect(() => {
+    console.log(isAuthenticated);
+  }, [isAuthenticated]);
   return (
     <Router>
       <NavBar />
