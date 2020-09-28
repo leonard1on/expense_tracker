@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Container,
+  Row,
+  Col,
   Button,
   Modal,
   ModalBody,
@@ -13,7 +15,7 @@ import AccountForm from "../Components/AccountForm";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Accounts = () => {
-  const { user } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const defaultAccount = {
     userId: "",
     type: "Cash",
@@ -120,127 +122,140 @@ const Accounts = () => {
   return (
     <Container>
       <h2>Accounts</h2>
-      <Modal
-        size="lg"
-        isOpen={modal}
-        toggle={toggle}
-        onClosed={() => setNewAccount(defaultAccount)}
-      >
-        <ModalHeader toggle={toggle}>Create New Account</ModalHeader>
-        <ModalBody>
-          <AccountForm
-            account={newAccount}
-            onChangeHandler={onChangeHandler}
-            typeHandler={setType}
-          />
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            className="Button"
-            onClick={() => {
-              createAccount();
-              toggle();
-            }}
+      {isAuthenticated ? (
+        <>
+          <Modal
+            size="lg"
+            isOpen={modal}
+            toggle={toggle}
+            onClosed={() => setNewAccount(defaultAccount)}
           >
-            Create Account
-          </Button>
-          <Button
-            color="danger"
-            className="Button"
-            onClick={() => {
-              toggle();
-            }}
+            <ModalHeader toggle={toggle}>Create New Account</ModalHeader>
+            <ModalBody>
+              <AccountForm
+                account={newAccount}
+                onChangeHandler={onChangeHandler}
+                typeHandler={setType}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="primary"
+                className="Button"
+                onClick={() => {
+                  createAccount();
+                  toggle();
+                }}
+              >
+                Create Account
+              </Button>
+              <Button
+                color="danger"
+                className="Button"
+                onClick={() => {
+                  toggle();
+                }}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
+          <Modal
+            size="lg"
+            isOpen={modifyModal}
+            toggle={modToggle}
+            onClosed={() => setModAccount(defaultAccount)}
           >
-            Cancel
+            <ModalHeader toggle={modToggle}>Modify Account</ModalHeader>
+            <ModalBody>
+              <AccountForm
+                account={modAccount}
+                onChangeHandler={onChangeHandlerMod}
+                typeHandler={setTypeMod}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="primary"
+                className="Button"
+                onClick={() => {
+                  modifyAccount();
+                  modToggle();
+                }}
+              >
+                Modify Account
+              </Button>
+              <Button
+                color="danger"
+                className="Button"
+                onClick={() => {
+                  modToggle();
+                }}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
+          <Button onClick={toggle} className="Add-Button">
+            +
           </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal
-        size="lg"
-        isOpen={modifyModal}
-        toggle={modToggle}
-        onClosed={() => setModAccount(defaultAccount)}
-      >
-        <ModalHeader toggle={modToggle}>Modify Account</ModalHeader>
-        <ModalBody>
-          <AccountForm
-            account={modAccount}
-            onChangeHandler={onChangeHandlerMod}
-            typeHandler={setTypeMod}
-          />
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            className="Button"
-            onClick={() => {
-              modifyAccount();
-              modToggle();
-            }}
-          >
-            Modify Account
-          </Button>
-          <Button
-            color="danger"
-            className="Button"
-            onClick={() => {
-              modToggle();
-            }}
-          >
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Button onClick={toggle} className="Add-Button">
-        +
-      </Button>
-      <Table>
-        <colgroup>
-          <col span="1" style={{ width: "35%" }} />
-          <col span="1" style={{ width: "30%" }} />
-          <col span="1" style={{ width: "20%" }} />
-          <col span="1" style={{ width: "15%" }} />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Account Name</th>
-            <th>Account Type</th>
-            <th>Current Amount</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accounts.map((acc, index) => {
-            return (
-              <tr key={acc._id}>
-                <td>{acc.name}</td>
-                <td>{acc.type}</td>
-                <td>{acc.money}</td>
-                <td>
-                  <Button
-                    color="success"
-                    onClick={() => {
-                      setModAccount(acc);
-                      modToggle();
-                    }}
-                  >
-                    Modify
-                  </Button>
-                  <Button
-                    color="danger"
-                    onClick={() => {
-                      deleteAccount(acc, index);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </td>
+          <Table>
+            <colgroup>
+              <col span="1" style={{ width: "35%" }} />
+              <col span="1" style={{ width: "30%" }} />
+              <col span="1" style={{ width: "20%" }} />
+              <col span="1" style={{ width: "15%" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Account Name</th>
+                <th>Account Type</th>
+                <th>Current Amount</th>
+                <th>Actions</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {accounts.map((acc, index) => {
+                return (
+                  <tr key={acc._id}>
+                    <td>{acc.name}</td>
+                    <td>{acc.type}</td>
+                    <td>{acc.money}</td>
+                    <td>
+                      <Button
+                        color="success"
+                        onClick={() => {
+                          setModAccount(acc);
+                          modToggle();
+                        }}
+                      >
+                        Modify
+                      </Button>
+                      <Button
+                        color="danger"
+                        onClick={() => {
+                          deleteAccount(acc, index);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      ) : (
+        <Row>
+          <Col>
+            <p>
+              Register first to save your money accounts! Once logged in, you
+              may proceed.
+            </p>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };

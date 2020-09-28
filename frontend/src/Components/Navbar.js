@@ -22,9 +22,7 @@ const NavBar = (props) => {
               Accounts
             </Link>
           </NavItem>
-          {isLoading ? (
-            <Spinner color="primary" />
-          ) : isAuthenticated ? (
+          {isLoading ? null : isAuthenticated ? (
             <NavItem>
               <LogoutButton />
             </NavItem>
