@@ -88,22 +88,27 @@ const Accounts = () => {
       });
   };
   // Delete Account State
-  //const [selectedAccount, setSelectedAccount] = useState(defaultAccount);
+  const [selectedAccount, setSelectedAccount] = useState(defaultAccount);
+  const [delIndex, setDelIndex] = useState(-1);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const deleteToggle = () => setDeleteModal(!deleteModal);
 
-  const deleteAccount = (acc, index) => {
-    if (user.sub !== acc.userId) return;
+  const deleteAccount = () => {
+    if (user.sub !== selectedAccount.userId || delIndex < 0) return;
 
-    axios.delete("http://localhost:8080/accounts/" + acc._id).then((res) => {
-      console.log(res);
-      const refAccounts = [...accounts];
-      refAccounts.splice(index, 1);
-      setAccounts(refAccounts);
-      axios
-        .delete("http://localhost:8080/expenses/uid/" + acc._id)
-        .then((exp) => {
-          console.log(exp);
-        });
-    });
+    axios
+      .delete("http://localhost:8080/accounts/" + selectedAccount._id)
+      .then((res) => {
+        console.log(res);
+        const refAccounts = [...accounts];
+        refAccounts.splice(delIndex, 1);
+        setAccounts(refAccounts);
+        axios
+          .delete("http://localhost:8080/expenses/uid/" + selectedAccount._id)
+          .then((exp) => {
+            console.log(exp);
+          });
+      });
   };
 
   // List Account
@@ -205,6 +210,30 @@ const Accounts = () => {
               </Button>
             </ModalFooter>
           </Modal>
+          <Modal size="md" isOpen={deleteModal} toggle={deleteToggle}>
+            <ModalHeader toggle={deleteToggle}>Deleting Account</ModalHeader>
+            <ModalBody>{`Are sure you want to delete ${selectedAccount.name} account? Note:This will also delete all your Expenses linked with the account.`}</ModalBody>
+            <ModalFooter>
+              <Button
+                color="danger"
+                onClick={() => {
+                  deleteToggle();
+                  deleteAccount();
+                }}
+              >
+                Delete
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => {
+                  deleteToggle();
+                  setSelectedAccount(defaultAccount);
+                }}
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
           <Button onClick={toggle} className="Add-Button">
             +
           </Button>
@@ -245,7 +274,9 @@ const Accounts = () => {
                         size="sm"
                         color="danger"
                         onClick={() => {
-                          deleteAccount(acc, index);
+                          setSelectedAccount(acc);
+                          setDelIndex(index);
+                          deleteToggle();
                         }}
                       >
                         Delete
