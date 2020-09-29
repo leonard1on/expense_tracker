@@ -48,7 +48,7 @@ const Accounts = () => {
     axios
       .post("http://localhost:8080/accounts/add", newAccount)
       .then((res) => {
-        listAccounts();
+        getAccounts();
         console.log(res.data);
       })
       .catch((err) => {
@@ -84,7 +84,7 @@ const Accounts = () => {
       )
       .then((res) => {
         console.log(res.data);
-        listAccounts();
+        getAccounts();
       });
   };
   // Delete Account State
@@ -109,10 +109,10 @@ const Accounts = () => {
   }, [accounts]);
 
   useEffect(() => {
-    listAccounts();
+    getAccounts();
   }, []);
 
-  const listAccounts = () => {
+  const getAccounts = () => {
     if (!isAuthenticated) return;
     axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
