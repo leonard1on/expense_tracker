@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Container,
-  Row,
-  Col,
-  Label,
-  Input,
-  Button,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Container, Row, Col, Alert, Button } from "reactstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import ExpenseForm from "../Components/ExpenseForm";
 
@@ -27,13 +16,27 @@ const AddExpense = () => {
   const [newExpense, setNewExpense] = useState(defaultExpense);
   const [accounts, setAccounts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [message, setMessage] = useState("");
 
-  const expenseHandler = (event) => {
-    // setNewExpense((prev) => ({
-    //   ...prev,
-    //   accId = data
-    // }))
-    console.log(event);
+  const accountHandler = (data) => {
+    setNewExpense((prev) => ({
+      ...prev,
+      accId: data._id,
+    }));
+  };
+
+  const categoryHandler = (data) => {
+    setNewExpense((prev) => ({
+      ...prev,
+      catId: data._id,
+    }));
+  };
+
+  const changeHandler = (event) => {
+    setNewExpense((prev) => ({
+      ...prev,
+      [event.name]: event.value,
+    }));
   };
 
   const getAccounts = () => {
@@ -61,16 +64,43 @@ const AddExpense = () => {
     getCategories();
     getAccounts();
   }, []);
+
+  useEffect(() => {
+    console.log(newExpense);
+  }, [newExpense]);
+
+  const addExpense = () => {
+    if (
+      !newExpense.accId ||
+      !newExpense.catId ||
+      newExpense.amount <= 0 ||
+      !newExpense.description
+    ) {
+      setMessage("All fields are required");
+      return;
+    }
+    newExpense.userId = user.sub;
+    axios.post("http://localhost:8080/expenses/add", newExpense).then((exp) => {
+      console.log(exp);
+    });
+  };
+
   return (
     <Container>
       <h2>Add Expenses</h2>
       {isAuthenticated ? (
         <div>
           <ExpenseForm
+            expense={newExpense}
             accounts={accounts}
             categories={categories}
-            handler={expenseHandler}
+            accHandler={accountHandler}
+            catHandler={categoryHandler}
+            handler={changeHandler}
           />
+          <Button className="Button" color="primary" onClick={addExpense}>
+            Add
+          </Button>
         </div>
       ) : (
         <Row>
@@ -82,6 +112,8 @@ const AddExpense = () => {
           </Col>
         </Row>
       )}
+      <br />
+      {message ? <Alert color="danger">{message}</Alert> : null}
     </Container>
   );
 };
