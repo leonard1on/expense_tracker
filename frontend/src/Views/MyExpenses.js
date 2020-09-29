@@ -15,6 +15,8 @@ import {
 const MyExpenses = () => {
   const { user, isAuthenticated } = useAuth0();
   const [expenses, setExpenses] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getExpenses = () => {
     if (!isAuthenticated) return;
@@ -27,16 +29,37 @@ const MyExpenses = () => {
     });
   };
 
-  const getAccount = (exp) => {
-    axios.get("http://localhost:8080/accounts/" + exp.accId).then((account) => {
-      console.log(account.data.name);
-      return account.data.name;
+  const getAccounts = () => {
+    if (!isAuthenticated) return;
+    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+      setAccounts(
+        res.data.map((acc) => {
+          return acc;
+        })
+      );
+    });
+  };
+
+  const getCategories = () => {
+    axios.get("http://localhost:8080/categories/").then((res) => {
+      setCategories(
+        res.data.map((cat) => {
+          return cat;
+        })
+      );
     });
   };
 
   useEffect(() => {
     getExpenses();
+    getAccounts();
+    getCategories();
   }, []);
+
+  useEffect(() => {
+    console.log(accounts);
+  }, [accounts]);
+
   return (
     <Container>
       <h2>My Expenses</h2>
@@ -62,15 +85,20 @@ const MyExpenses = () => {
             {expenses.map((exp, index) => {
               return (
                 <tr key={exp._id}>
-                  <td>{getAccount(exp)}</td>
-                  <td>{exp.catId}</td>
+                  <td>
+                    {accounts.find((acc) => acc._id === exp.accId)
+                      ? accounts.find((acc) => acc._id === exp.accId).name
+                      : null}
+                  </td>
+                  <td>
+                    {categories.find((cat) => cat._id === exp.catId)
+                      ? categories.find((cat) => cat._id === exp.catId).name
+                      : null}
+                  </td>
                   <td>{exp.amount}</td>
                   <td>{exp.description}</td>
                   <td>
-                    <Button size="sm" color="success" onClick={() => {}}>
-                      Modify
-                    </Button>{" "}
-                    <Button size="sm" color="danger" onClick={() => {}}>
+                    <Button color="danger" onClick={() => {}}>
                       Delete
                     </Button>
                   </td>
