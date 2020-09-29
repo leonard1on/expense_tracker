@@ -16,7 +16,8 @@ const AddExpense = () => {
   const [newExpense, setNewExpense] = useState(defaultExpense);
   const [accounts, setAccounts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const accountHandler = (data) => {
     setNewExpense((prev) => ({
@@ -65,10 +66,6 @@ const AddExpense = () => {
     getAccounts();
   }, []);
 
-  useEffect(() => {
-    console.log(newExpense);
-  }, [newExpense]);
-
   const addExpense = () => {
     if (
       !newExpense.accId ||
@@ -76,12 +73,13 @@ const AddExpense = () => {
       newExpense.amount <= 0 ||
       !newExpense.description
     ) {
-      setMessage("All fields are required");
+      setError("All fields are required");
       return;
     }
     newExpense.userId = user.sub;
     axios.post("http://localhost:8080/expenses/add", newExpense).then((exp) => {
-      console.log(exp);
+      setSuccess(exp.data);
+      setNewExpense(defaultExpense);
     });
   };
 
@@ -113,7 +111,8 @@ const AddExpense = () => {
         </Row>
       )}
       <br />
-      {message ? <Alert color="danger">{message}</Alert> : null}
+      {error ? <Alert color="danger">{error}</Alert> : null}
+      {success ? <Alert color="success">{error}</Alert> : null}
     </Container>
   );
 };

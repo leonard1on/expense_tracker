@@ -55,7 +55,7 @@ const AccountForm = ({ account, onChangeHandler, typeHandler }) => {
         <Col xs="9">
           <Label>Amount of Money</Label>
           <Input
-            type="text"
+            type="number"
             name="money"
             value={account.money}
             id="money"

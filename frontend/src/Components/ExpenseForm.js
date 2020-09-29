@@ -22,7 +22,7 @@ const ExpenseForm = ({
   return (
     <Form>
       <Row>
-        <Col xs="5">
+        <Col xs="4">
           <Label>Account</Label>
           <br />
           <UncontrolledButtonDropdown className="Btn-group">
@@ -46,7 +46,17 @@ const ExpenseForm = ({
             </DropdownMenu>
           </UncontrolledButtonDropdown>
         </Col>
-        <Col xs="5">
+        <Col xs="2">
+          <Label>Amount</Label>
+          <Input
+            type="text"
+            name="amount"
+            id="amount"
+            value={expense.amount}
+            onChange={(event) => handler(event.currentTarget)}
+          />
+        </Col>
+        <Col xs="4">
           <Label>Category</Label>
           <br />
           <UncontrolledButtonDropdown className="Btn-group">
@@ -73,7 +83,7 @@ const ExpenseForm = ({
         <Col xs="2">
           <Label>Amount</Label>
           <Input
-            type="text"
+            type="number"
             name="amount"
             id="amount"
             value={expense.amount}

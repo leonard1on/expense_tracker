@@ -205,10 +205,10 @@ const Accounts = () => {
           </Button>
           <Table>
             <colgroup>
-              <col span="1" style={{ width: "35%" }} />
-              <col span="1" style={{ width: "30%" }} />
+              <col span="1" style={{ width: "40%" }} />
               <col span="1" style={{ width: "20%" }} />
-              <col span="1" style={{ width: "15%" }} />
+              <col span="1" style={{ width: "20%" }} />
+              <col span="1" style={{ width: "20%" }} />
             </colgroup>
             <thead>
               <tr>
@@ -227,6 +227,7 @@ const Accounts = () => {
                     <td>{acc.money}</td>
                     <td>
                       <Button
+                        size="sm"
                         color="success"
                         onClick={() => {
                           setModAccount(acc);
@@ -234,8 +235,9 @@ const Accounts = () => {
                         }}
                       >
                         Modify
-                      </Button>
+                      </Button>{" "}
                       <Button
+                        size="sm"
                         color="danger"
                         onClick={() => {
                           deleteAccount(acc, index);
