@@ -22,6 +22,11 @@ const NavBar = (props) => {
               Accounts
             </Link>
           </NavItem>
+          <NavItem>
+            <Link to="/categories" className="nav-link">
+              Categories
+            </Link>
+          </NavItem>
           {isLoading ? null : isAuthenticated ? (
             <NavItem>
               <LogoutButton />
