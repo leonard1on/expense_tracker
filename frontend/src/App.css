@@ -29,3 +29,7 @@
   right: 50%;
   bottom: 50%;
 }
+
+.Btn-group {
+  display: flex !important;
+}
