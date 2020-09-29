@@ -115,10 +115,6 @@ const Accounts = () => {
   const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
-    console.log(accounts);
-  }, [accounts]);
-
-  useEffect(() => {
     getAccounts();
   }, []);
 

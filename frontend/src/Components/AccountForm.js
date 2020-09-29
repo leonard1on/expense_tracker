@@ -41,6 +41,7 @@ const AccountForm = ({ account, onChangeHandler, typeHandler }) => {
               {accountTypes.map((acc) => {
                 return (
                   <DropdownItem
+                    key={acc._id}
                     onClick={() => {
                       typeHandler(acc);
                     }}
