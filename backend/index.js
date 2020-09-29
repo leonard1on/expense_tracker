@@ -8,6 +8,7 @@ require("dotenv").config();
 const Accounts = require("./routes/accounts");
 const Categories = require("./routes/categories");
 const Users = require("./routes/users");
+const Expenses = require("./routes/expenses");
 
 const app = express();
 const PORT = 8080;
@@ -30,6 +31,7 @@ connection.once("open", () => {
 app.use("/accounts", Accounts);
 app.use("/categories", Categories);
 app.use("/users", Users);
+app.use("/expenses", Expenses);
 
 app.listen(PORT, () => {
   console.log("Server is running on Port: " + PORT);
