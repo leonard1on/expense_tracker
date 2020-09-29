@@ -35,6 +35,7 @@ const ExpenseForm = ({
               {accounts.map((acc) => {
                 return (
                   <DropdownItem
+                    key={acc._id}
                     onClick={() => {
                       accHandler(acc);
                     }}
@@ -47,13 +48,14 @@ const ExpenseForm = ({
           </UncontrolledButtonDropdown>
         </Col>
         <Col xs="2">
-          <Label>Amount</Label>
+          <Label>Amount Available</Label>
           <Input
-            type="text"
-            name="amount"
-            id="amount"
-            value={expense.amount}
-            onChange={(event) => handler(event.currentTarget)}
+            disabled
+            value={
+              expense.accId
+                ? accounts.find((x) => x._id === expense.accId).money
+                : ""
+            }
           />
         </Col>
         <Col xs="4">
@@ -69,6 +71,7 @@ const ExpenseForm = ({
               {categories.map((cat) => {
                 return (
                   <DropdownItem
+                    key={cat._id}
                     onClick={() => {
                       catHandler(cat);
                     }}
@@ -81,7 +84,7 @@ const ExpenseForm = ({
           </UncontrolledButtonDropdown>
         </Col>
         <Col xs="2">
-          <Label>Amount</Label>
+          <Label>Amount Spent</Label>
           <Input
             type="number"
             name="amount"

@@ -61,11 +61,6 @@ const AddExpense = () => {
     });
   };
 
-  useEffect(() => {
-    getCategories();
-    getAccounts();
-  }, []);
-
   const addExpense = () => {
     if (
       !newExpense.accId ||
@@ -78,11 +73,34 @@ const AddExpense = () => {
     }
     newExpense.userId = user.sub;
     axios.post("http://localhost:8080/expenses/add", newExpense).then((exp) => {
+      const refAccount = accounts.find((acc) => acc._id === newExpense.accId);
+      refAccount.money -= newExpense.amount;
+      console.log(exp.data);
+      axios
+        .post(
+          "http://localhost:8080/accounts/update/" + refAccount._id,
+          refAccount
+        )
+        .then((acc) => {
+          console.log(acc);
+          getAccounts();
+        });
+      setError("");
       setSuccess(exp.data);
       setNewExpense(defaultExpense);
     });
   };
 
+  useEffect(() => {
+    getCategories();
+    getAccounts();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSuccess("");
+    }, 5000);
+  }, [success]);
   return (
     <Container>
       <h2>Add Expenses</h2>
@@ -112,7 +130,7 @@ const AddExpense = () => {
       )}
       <br />
       {error ? <Alert color="danger">{error}</Alert> : null}
-      {success ? <Alert color="success">{error}</Alert> : null}
+      {success ? <Alert color="success">{success}</Alert> : null}
     </Container>
   );
 };

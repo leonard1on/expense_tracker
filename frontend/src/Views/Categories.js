@@ -52,8 +52,8 @@ const Categories = () => {
           ) : (
             categories.map((cat) => {
               return (
-                <Col xs="3" className="Col">
-                  <ListGroupItem>{cat.name}</ListGroupItem>
+                <Col xs="3" className="Col" key={cat._id}>
+                  <ListGroupItem key={cat._id}>{cat.name}</ListGroupItem>
                 </Col>
               );
             })
