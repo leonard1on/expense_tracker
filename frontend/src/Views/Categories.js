@@ -43,6 +43,7 @@ const Categories = () => {
   return (
     <Container>
       <h2>Categories</h2>
+      <br />
       <ListGroup>
         <Row>
           {categories.length === 0 ? (
@@ -53,7 +54,9 @@ const Categories = () => {
             categories.map((cat) => {
               return (
                 <Col xs="3" className="Col" key={cat._id}>
-                  <ListGroupItem key={cat._id}>{cat.name}</ListGroupItem>
+                  <ListGroupItem key={cat._id} style={{ marginTop: "4px" }}>
+                    {cat.name}
+                  </ListGroupItem>
                 </Col>
               );
             })
