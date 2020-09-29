@@ -50,6 +50,17 @@ const MyExpenses = () => {
     });
   };
 
+  const deleteExpense = (exp, index) => {
+    if (exp.userId !== user.sub) return;
+
+    axios.delete("http://localhost:8080/expenses/" + exp._id).then((res) => {
+      console.log(res);
+      const refExpenses = [...expenses];
+      refExpenses.splice(index, 1);
+      setExpenses(refExpenses);
+    });
+  };
+
   useEffect(() => {
     getExpenses();
     getAccounts();
@@ -98,7 +109,12 @@ const MyExpenses = () => {
                   <td>{exp.amount}</td>
                   <td>{exp.description}</td>
                   <td>
-                    <Button color="danger" onClick={() => {}}>
+                    <Button
+                      color="danger"
+                      onClick={() => {
+                        deleteExpense(exp, index);
+                      }}
+                    >
                       Delete
                     </Button>
                   </td>
