@@ -212,7 +212,11 @@ const Accounts = () => {
           </Modal>
           <Modal size="md" isOpen={deleteModal} toggle={deleteToggle}>
             <ModalHeader toggle={deleteToggle}>Deleting Account</ModalHeader>
-            <ModalBody>{`Are sure you want to delete ${selectedAccount.name} account? Note:This will also delete all your Expenses linked with the account.`}</ModalBody>
+            <ModalBody>
+              {`Are sure you want to delete ${selectedAccount.name} account?`}
+              <br />
+              {` Note: This will also delete all your Expenses linked with the account.`}
+            </ModalBody>
             <ModalFooter>
               <Button
                 color="danger"
