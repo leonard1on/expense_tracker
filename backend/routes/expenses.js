@@ -41,6 +41,12 @@ router.route("/:id").delete((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/uid/:id").delete((req, res) => {
+  Expense.deleteMany({ accId: req.params.id })
+    .then(() => res.json("Expenses deleted successfully"))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 router.route("/update/:id").post((req, res) => {
   Expense.findById(req.params.id)
     .then((expense) => {

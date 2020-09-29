@@ -91,13 +91,18 @@ const Accounts = () => {
   //const [selectedAccount, setSelectedAccount] = useState(defaultAccount);
 
   const deleteAccount = (acc, index) => {
-    if (user.sub !== modAccount.userId) return;
+    if (user.sub !== acc.userId) return;
 
     axios.delete("http://localhost:8080/accounts/" + acc._id).then((res) => {
       console.log(res);
       const refAccounts = [...accounts];
       refAccounts.splice(index, 1);
       setAccounts(refAccounts);
+      axios
+        .delete("http://localhost:8080/expenses/uid/" + acc._id)
+        .then((exp) => {
+          console.log(exp);
+        });
     });
   };
 
