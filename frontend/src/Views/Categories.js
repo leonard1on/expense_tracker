@@ -50,19 +50,17 @@ const Categories = () => {
               <p>Currently no categories exist</p>
             </Col>
           ) : (
-            <div>
-              {categories.map((cat) => {
-                return (
-                  <Col xs="3" className="Col">
-                    <ListGroupItem>{cat.name}</ListGroupItem>
-                  </Col>
-                );
-              })}
-              <br />
-            </div>
+            categories.map((cat) => {
+              return (
+                <Col xs="3" className="Col">
+                  <ListGroupItem>{cat.name}</ListGroupItem>
+                </Col>
+              );
+            })
           )}
         </Row>
       </ListGroup>
+      <br />
       <Row>
         <Col xs="10">
           <Label>Add a Category</Label>

@@ -8,6 +8,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Home from "./Views/Home";
 import Accounts from "./Views/Accounts";
 import Categories from "./Views/Categories";
+import MyExpenses from "./Views/MyExpenses";
+import AddExpense from "./Views/AddExpense";
 import NavBar from "./Components/Navbar";
 
 const App = () => {
@@ -35,6 +37,12 @@ const App = () => {
           </Route>
           <Route path="/categories" exact>
             <Categories />
+          </Route>
+          <Route path="/my-expenses" exact>
+            <MyExpenses />
+          </Route>
+          <Route path="/add-expense" exact>
+            <AddExpense />
           </Route>
         </div>
       )}
