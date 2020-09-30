@@ -6,7 +6,7 @@ import ExpenseForm from "../Components/ExpenseForm";
 
 const AddExpense = () => {
   const defaultExpense = {
-    userID: "",
+    userId: "",
     catId: "",
     accId: "",
     amount: 0,
@@ -75,18 +75,44 @@ const AddExpense = () => {
     axios.post("http://localhost:8080/expenses/add", newExpense).then((exp) => {
       const refAccount = accounts.find((acc) => acc._id === newExpense.accId);
       refAccount.money -= newExpense.amount;
-      console.log(exp.data);
+      setError("");
+      setSuccess(exp.data);
+      // console.log(exp.data);
       axios
         .post(
           "http://localhost:8080/accounts/update/" + refAccount._id,
           refAccount
         )
         .then((acc) => {
-          console.log(acc);
+          // console.log(acc);
           getAccounts();
         });
-      setError("");
-      setSuccess(exp.data);
+
+      axios
+        .get("http://localhost:8080/expenses/uid/" + user.sub)
+        .then((res) => {
+          const count = res.data.reduce((ret, expense) => {
+            let value = ret;
+            if (expense.catId === newExpense.catId) {
+              value += 1;
+              console.log(value);
+            }
+            return value;
+          }, 0);
+
+          if (count > 4) {
+            const refCat = categories.find(
+              (cat) => cat._id === newExpense.catId
+            );
+            setSuccess(
+              "Another purchase for " +
+                refCat.name +
+                " I see... Well it's just " +
+                newExpense.amount
+            );
+          }
+        });
+
       setNewExpense(defaultExpense);
     });
   };

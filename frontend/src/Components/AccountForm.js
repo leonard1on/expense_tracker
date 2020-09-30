@@ -33,8 +33,8 @@ const AccountForm = ({ account, onChangeHandler, typeHandler }) => {
         <Col xs="3">
           <Label>Account Type</Label>
           <br />
-          <UncontrolledButtonDropdown>
-            <DropdownToggle caret color="primary">
+          <UncontrolledButtonDropdown className="Btn-group">
+            <DropdownToggle caret color="success">
               {account.type}
             </DropdownToggle>
             <DropdownMenu>

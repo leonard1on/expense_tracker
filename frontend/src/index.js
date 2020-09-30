@@ -6,15 +6,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain="dev-bzz2og0u.us.auth0.com"
-      clientId="LOgtXv6iU2xJeFiaiS5TgQfEbsp96tkU"
-      redirectUri={window.location.origin}
-    >
-      <App />
-    </Auth0Provider>
-  </React.StrictMode>,
+  <Auth0Provider
+    domain="dev-bzz2og0u.us.auth0.com"
+    clientId="LOgtXv6iU2xJeFiaiS5TgQfEbsp96tkU"
+    redirectUri={window.location.origin}
+  >
+    <App />
+  </Auth0Provider>,
   document.getElementById("root")
 );
 serviceWorker.unregister();

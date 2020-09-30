@@ -15,12 +15,6 @@ import NavBar from "./Components/Navbar";
 const App = () => {
   const { user, isLoading, isAuthenticated } = useAuth0();
 
-  if (isAuthenticated && !isLoading) {
-    console.log(user);
-  }
-  useEffect(() => {
-    console.log(isAuthenticated);
-  }, [isAuthenticated]);
   return (
     <Router>
       <NavBar />
