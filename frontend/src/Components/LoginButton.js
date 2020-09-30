@@ -8,7 +8,7 @@ const LoginButton = () => {
   return (
     <Button
       className="nav-link"
-      style={{ background: "none", border: "none" }}
+      style={{ background: "none", border: "none", boxShadow: "none" }}
       onClick={() => loginWithRedirect()}
     >
       Log In
