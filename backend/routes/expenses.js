@@ -41,13 +41,10 @@ router.route("/reports/:id").get((req, res) => {
       const index = reports.findIndex((e) => e.accId === exp.accId);
       if (index < 0) {
         exp.description = 1;
-        console.log("true");
         reports.push(exp);
       } else {
-        console.log("false");
         reports[index].amount += exp.amount;
         reports[index].description += 1;
-        console.log(reports);
       }
     });
     res.json(reports);

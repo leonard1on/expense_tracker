@@ -63,6 +63,9 @@ const Home = () => {
 
   useEffect(() => {
     getExpenses();
+  }, [month]);
+
+  useEffect(() => {
     getAccounts();
   }, []);
 
@@ -90,7 +93,6 @@ const Home = () => {
                       key={months.indexOf(mth)}
                       onClick={() => {
                         setMonth(months.indexOf(mth));
-                        getExpenses();
                       }}
                     >
                       {mth}
@@ -121,22 +123,15 @@ const Home = () => {
                   </thead>
                   <tbody>
                     {accounts.map((acc) => {
+                      const exp = expenses.find((e) => {
+                        if (e) return e.accId === acc._id;
+                      });
                       return (
                         <tr key={acc._id}>
                           <td>{acc.name}</td>
                           <td>{acc.type}</td>
-                          <td>
-                            {expenses.find((exp) => exp.accId === acc._id)
-                              ? expenses.find((exp) => exp.accId === acc._id)
-                                  .description.length
-                              : 0}
-                          </td>
-                          <td>
-                            {expenses.find((exp) => exp.accId === acc._id)
-                              ? expenses.find((exp) => exp.accId === acc._id)
-                                  .amount
-                              : 0}
-                          </td>
+                          <td>{exp ? exp.description.length : 0}</td>
+                          <td>{exp ? exp.amount : 0}</td>
                         </tr>
                       );
                     })}
