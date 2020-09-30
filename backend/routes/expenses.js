@@ -36,17 +36,21 @@ router.route("/uid/:id").get((req, res) => {
 
 router.route("/reports/:id").get((req, res) => {
   Expense.find({ userId: req.params.id }).then((expenses) => {
-    res.json(expenses);
     const reports = [];
     expenses.map((exp) => {
-      const index = reports.indexOf((e) => e.accId === exp.accId);
+      const index = reports.findIndex((e) => e.accId === exp.accId);
       if (index < 0) {
+        exp.useFrecuency = 1;
         console.log("true");
         reports.push(exp);
       } else {
         console.log("false");
+        reports[index].amount += exp.amount;
+        reports[index].useFrecuency += 1;
+        console.log(reports);
       }
     });
+    res.json(reports);
   });
 });
 
