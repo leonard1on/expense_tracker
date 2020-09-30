@@ -29,9 +29,7 @@ router.route("/:id").get((req, res) => {
 });
 
 router.route("/uid/:id").get((req, res) => {
-  Expense.find()
-    .where("userId")
-    .equals(req.params.id)
+  Expense.find({ userId: req.params.id })
     .then((expense) => res.json(expense))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -66,11 +64,10 @@ router.route("/update/:id").post((req, res) => {
 });
 
 router.route("/cid").post((req, res) => {
-  Expense.find()
-    .where("userId")
-    .equals(req.body.userId)
-    .where("catId")
-    .equals(req.body.catId)
+  Expense.find({
+    userId: req.body.userId,
+    catId: req.body.catId,
+  })
     .then((expense) => res.json(expense))
     .catch((err) => res.status(400).json("Error: " + err));
 });

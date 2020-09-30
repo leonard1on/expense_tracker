@@ -92,7 +92,7 @@ const AddExpense = () => {
         .post("http://localhost:8080/expenses/cid", newExpense)
         .then((res) => {
           console.log(res);
-          if (res.data.length > 4) {
+          if (res.data.length > 6) {
             const refCat = categories.find(
               (cat) => cat._id === newExpense.catId
             );
@@ -101,7 +101,7 @@ const AddExpense = () => {
                 refCat.name +
                 " I see... Well it's just " +
                 newExpense.amount +
-                " less money"
+                " less this month."
             );
           }
         });
