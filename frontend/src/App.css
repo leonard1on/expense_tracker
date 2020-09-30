@@ -10,24 +10,28 @@ tr {
   background-color: white;
 }
 
-.dropdown-menu {
-  background-color: #343a40;
+.container {
+  background-color: white;
+  padding: 25px 25px;
+  border-radius: 15px;
+  box-shadow: 1px 1px 5px #0004;
+  margin-bottom: 40px;
 }
 
-.dropdown-item {
+.Dropdown-item {
   transition: 250ms;
 }
 
-.dropdown-item a {
+.Dropdown-item a {
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
 }
 
-.dropdown-item:hover {
+.Dropdown-item:hover {
   background-color: darkslateblue;
 }
 
-.dropdown-item:hover a {
+.Dropdown-item:hover a {
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -61,7 +65,4 @@ tr {
 
 .Btn-group {
   display: flex !important;
-}
-
-.Table-Row {
 }

@@ -149,7 +149,6 @@ const AddExpense = () => {
           </Col>
         </Row>
       )}
-      <br />
       {error ? <Alert color="danger">{error}</Alert> : null}
       {success ? <Alert color="success">{success}</Alert> : null}
     </Container>

@@ -31,15 +31,19 @@ const NavBar = (props) => {
               <DropdownToggle
                 caret
                 className="nav-link"
-                style={{ background: "none", border: "none" }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  boxShadow: "none",
+                }}
               >
                 Expenses
               </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>
+              <DropdownMenu style={{ backgroundColor: "#343a40" }}>
+                <DropdownItem className="Dropdown-item">
                   <Link to="/my-expenses">My Expenses</Link>
                 </DropdownItem>
-                <DropdownItem>
+                <DropdownItem className="Dropdown-item">
                   <Link to="/add-expense">Add Expense</Link>
                 </DropdownItem>
               </DropdownMenu>
