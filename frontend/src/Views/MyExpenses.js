@@ -81,18 +81,11 @@ const MyExpenses = () => {
           </thead>
           <tbody>
             {expenses.map((exp, index) => {
+              const refAcc = accounts.find((acc) => acc._id === exp.accId);
               return (
                 <tr key={exp._id}>
-                  <td>
-                    {accounts.find((acc) => acc._id === exp.accId)
-                      ? accounts.find((acc) => acc._id === exp.accId).name
-                      : null}
-                  </td>
-                  <td>
-                    {categories.find((cat) => cat._id === exp.catId)
-                      ? categories.find((cat) => cat._id === exp.catId).name
-                      : null}
-                  </td>
+                  <td>{refAcc ? refAcc.name : null}</td>
+                  <td>{refAcc ? refAcc.name : null}</td>
                   <td>{exp.amount}</td>
                   <td>{exp.description}</td>
                   <td>
