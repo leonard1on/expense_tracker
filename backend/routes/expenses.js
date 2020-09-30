@@ -34,6 +34,22 @@ router.route("/uid/:id").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/reports/:id").get((req, res) => {
+  Expense.find({ userId: req.params.id }).then((expenses) => {
+    res.json(expenses);
+    const reports = [];
+    expenses.map((exp) => {
+      const index = reports.indexOf((e) => e.accId === exp.accId);
+      if (index < 0) {
+        console.log("true");
+        reports.push(exp);
+      } else {
+        console.log("false");
+      }
+    });
+  });
+});
+
 router.route("/:id").delete((req, res) => {
   Expense.findByIdAndDelete(req.params.id)
     .then(() => res.json("Expense deleted successfully"))

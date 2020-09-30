@@ -35,16 +35,18 @@ const Home = () => {
 
   const getExpenses = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/expenses/uid/" + user.sub).then((res) => {
-      setExpenses(
-        res.data.map((acc) => {
-          const accMonth = new Date(acc.createdAt).getMonth();
-          if (accMonth === month) {
-            return acc;
-          }
-        })
-      );
-    });
+    axios
+      .get("http://localhost:8080/expenses/reports/" + user.sub)
+      .then((res) => {
+        setExpenses(
+          res.data.map((acc) => {
+            const accMonth = new Date(acc.createdAt).getMonth();
+            if (accMonth === month) {
+              return acc;
+            }
+          })
+        );
+      });
   };
 
   const getAccounts = () => {
@@ -109,8 +111,8 @@ const Home = () => {
                 <thead>
                   <tr>
                     <th>Account Name</th>
-                    <th>Account Type</th>
                     <th>Amount Available</th>
+                    <th>Use Frecuency</th>
                     <th>Total Spent</th>
                   </tr>
                 </thead>
