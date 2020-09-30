@@ -42,6 +42,7 @@ const Home = () => {
           res.data.map((acc) => {
             const accMonth = new Date(acc.createdAt).getMonth();
             if (accMonth === month) {
+              console.log(accMonth, month);
               return acc;
             }
           })
@@ -89,6 +90,7 @@ const Home = () => {
                       key={months.indexOf(mth)}
                       onClick={() => {
                         setMonth(months.indexOf(mth));
+                        getExpenses();
                       }}
                     >
                       {mth}
@@ -101,34 +103,46 @@ const Home = () => {
           <br />
           <Row>
             <Col>
-              <Table>
-                <colgroup>
-                  <col span="1" style={{ width: "25%" }} />
-                  <col span="1" style={{ width: "25%" }} />
-                  <col span="1" style={{ width: "25%" }} />
-                  <col span="1" style={{ width: "25%" }} />
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>Account Name</th>
-                    <th>Amount Available</th>
-                    <th>Use Frecuency</th>
-                    <th>Total Spent</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accounts.map((acc, index) => {
-                    return (
-                      <tr key={acc._id}>
-                        <td>{acc.name}</td>
-                        <td>{acc.type}</td>
-                        <td>{acc.money}</td>
-                        <td>hols</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
+              {expenses ? (
+                <Table>
+                  <colgroup>
+                    <col span="1" style={{ width: "25%" }} />
+                    <col span="1" style={{ width: "25%" }} />
+                    <col span="1" style={{ width: "25%" }} />
+                    <col span="1" style={{ width: "25%" }} />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Account Name</th>
+                      <th>Amount Available</th>
+                      <th>Use Frecuency</th>
+                      <th>Total Spent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {accounts.map((acc) => {
+                      return (
+                        <tr key={acc._id}>
+                          <td>{acc.name}</td>
+                          <td>{acc.type}</td>
+                          <td>
+                            {expenses.find((exp) => exp.accId === acc._id)
+                              ? expenses.find((exp) => exp.accId === acc._id)
+                                  .description.length
+                              : 0}
+                          </td>
+                          <td>
+                            {expenses.find((exp) => exp.accId === acc._id)
+                              ? expenses.find((exp) => exp.accId === acc._id)
+                                  .amount
+                              : 0}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              ) : null}
             </Col>
           </Row>
         </>
