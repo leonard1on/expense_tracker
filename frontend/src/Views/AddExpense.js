@@ -91,7 +91,7 @@ const AddExpense = () => {
       axios
         .post("http://localhost:8080/expenses/cid", newExpense)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.data.length > 6) {
             const refCat = categories.find(
               (cat) => cat._id === newExpense.catId

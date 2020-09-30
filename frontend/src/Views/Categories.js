@@ -13,7 +13,6 @@ import {
 const Categories = () => {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
-
   const getCategories = () => {
     axios.get("http://localhost:8080/categories/").then((res) => {
       setCategories(
@@ -34,10 +33,10 @@ const Categories = () => {
       .post("http://localhost:8080/categories/add", newCategory)
       .then((res) => {
         getCategories();
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
-        console.log("Error: ", err);
+        // console.log("Error: ", err);
       });
   };
   return (
@@ -64,6 +63,7 @@ const Categories = () => {
         </Row>
       </ListGroup>
       <br />
+
       <Row>
         <Col xs="10">
           <Label>Add a Category</Label>

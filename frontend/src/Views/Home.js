@@ -42,7 +42,6 @@ const Home = () => {
           res.data.map((acc) => {
             const accMonth = new Date(acc.createdAt).getMonth();
             if (accMonth === month) {
-              console.log(accMonth, month);
               return acc;
             }
           })
@@ -68,10 +67,6 @@ const Home = () => {
   useEffect(() => {
     getAccounts();
   }, []);
-
-  useEffect(() => {
-    console.log(expenses);
-  }, [expenses]);
 
   return (
     <Container>

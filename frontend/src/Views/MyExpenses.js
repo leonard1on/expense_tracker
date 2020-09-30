@@ -45,7 +45,7 @@ const MyExpenses = () => {
     if (exp.userId !== user.sub) return;
 
     axios.delete("http://localhost:8080/expenses/" + exp._id).then((res) => {
-      console.log(res);
+      // console.log(res);
       const refExpenses = [...expenses];
       refExpenses.splice(index, 1);
       setExpenses(refExpenses);
@@ -57,10 +57,6 @@ const MyExpenses = () => {
     getAccounts();
     getCategories();
   }, []);
-
-  useEffect(() => {
-    console.log(accounts);
-  }, [accounts]);
 
   return (
     <Container>
