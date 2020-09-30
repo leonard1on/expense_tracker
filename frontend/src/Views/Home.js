@@ -8,6 +8,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Table,
 } from "reactstrap";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -29,6 +30,7 @@ const Home = () => {
   ];
   const { user, isAuthenticated } = useAuth0();
   const [expenses, setExpenses] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [month, setMonth] = useState(new Date().getMonth());
 
   const getExpenses = () => {
@@ -45,8 +47,20 @@ const Home = () => {
     });
   };
 
+  const getAccounts = () => {
+    if (!isAuthenticated) return;
+    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+      setAccounts(
+        res.data.map((acc) => {
+          return acc;
+        })
+      );
+    });
+  };
+
   useEffect(() => {
     getExpenses();
+    getAccounts();
   }, []);
 
   useEffect(() => {
@@ -57,30 +71,65 @@ const Home = () => {
     <Container>
       <h2>Expense Tracker</h2>
       {isAuthenticated ? (
-        <Row>
-          <Col xs="6">
-            <h4>This month's expense report of 2020:</h4>
-          </Col>
-          <Col xs="3">
-            <UncontrolledButtonDropdown className="Btn-group">
-              <DropdownToggle caret color="success">
-                {months[month]}
-              </DropdownToggle>
-              <DropdownMenu>
-                {months.map((mth) => (
-                  <DropdownItem
-                    key={months.indexOf(mth)}
-                    onClick={() => {
-                      setMonth(months.indexOf(mth));
-                    }}
-                  >
-                    {mth}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </UncontrolledButtonDropdown>
-          </Col>
-        </Row>
+        <>
+          <Row>
+            <Col xs="6">
+              <h4>This month's expense report of 2020:</h4>
+            </Col>
+            <Col xs="3">
+              <UncontrolledButtonDropdown className="Btn-group">
+                <DropdownToggle caret color="success">
+                  {months[month]}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {months.map((mth) => (
+                    <DropdownItem
+                      key={months.indexOf(mth)}
+                      onClick={() => {
+                        setMonth(months.indexOf(mth));
+                      }}
+                    >
+                      {mth}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </UncontrolledButtonDropdown>
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col>
+              <Table>
+                <colgroup>
+                  <col span="1" style={{ width: "25%" }} />
+                  <col span="1" style={{ width: "25%" }} />
+                  <col span="1" style={{ width: "25%" }} />
+                  <col span="1" style={{ width: "25%" }} />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Account Name</th>
+                    <th>Account Type</th>
+                    <th>Amount Available</th>
+                    <th>Total Spent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {accounts.map((acc, index) => {
+                    return (
+                      <tr key={acc._id}>
+                        <td>{acc.name}</td>
+                        <td>{acc.type}</td>
+                        <td>{acc.money}</td>
+                        <td>hols</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </>
       ) : (
         <p style={{ fontSize: "1.2rem" }}>
           Welcome to the Expense Tracker webapp! Once you are signed in, you

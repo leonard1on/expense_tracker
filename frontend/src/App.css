@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+/* body {
+  background-color: #f0f0ff !important;
+}
+
+tr {
+  background-color: white;
+} */
+
 .Button {
   margin-top: 8px;
 }
@@ -32,4 +40,7 @@
 
 .Btn-group {
   display: flex !important;
+}
+
+.Table-Row {
 }
