@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { where } = require("../models/expense.model");
 let Expense = require("../models/expense.model");
 
 router.route("/").get((req, res) => {
@@ -61,6 +62,16 @@ router.route("/update/:id").post((req, res) => {
         .then(() => res.json("Expense updated successfully"))
         .catch((err) => res.status(400).json("Error: " + err));
     })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/cid").post((req, res) => {
+  Expense.find()
+    .where("userId")
+    .equals(req.body.userId)
+    .where("catId")
+    .equals(req.body.catId)
+    .then((expense) => res.json(expense))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 

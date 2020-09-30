@@ -89,18 +89,10 @@ const AddExpense = () => {
         });
 
       axios
-        .get("http://localhost:8080/expenses/uid/" + user.sub)
+        .post("http://localhost:8080/expenses/cid", newExpense)
         .then((res) => {
-          const count = res.data.reduce((ret, expense) => {
-            let value = ret;
-            if (expense.catId === newExpense.catId) {
-              value += 1;
-              console.log(value);
-            }
-            return value;
-          }, 0);
-
-          if (count > 4) {
+          console.log(res);
+          if (res.data.length > 4) {
             const refCat = categories.find(
               (cat) => cat._id === newExpense.catId
             );
@@ -108,7 +100,8 @@ const AddExpense = () => {
               "Another purchase for " +
                 refCat.name +
                 " I see... Well it's just " +
-                newExpense.amount
+                newExpense.amount +
+                " less money"
             );
           }
         });
@@ -125,7 +118,7 @@ const AddExpense = () => {
   useEffect(() => {
     setTimeout(() => {
       setSuccess("");
-    }, 5000);
+    }, 8000);
   }, [success]);
   return (
     <Container>
