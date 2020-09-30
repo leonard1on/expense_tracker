@@ -116,10 +116,12 @@ const AddExpense = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      setSuccess("");
-    }, 8000);
+    if (success)
+      setTimeout(() => {
+        setSuccess("");
+      }, 8000);
   }, [success]);
+
   return (
     <Container>
       <h2>Add Expenses</h2>

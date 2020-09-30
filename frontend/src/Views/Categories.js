@@ -11,7 +11,6 @@ import {
   ListGroupItem,
 } from "reactstrap";
 const Categories = () => {
-  const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
   const getCategories = () => {
     axios.get("http://localhost:8080/categories/").then((res) => {
@@ -26,19 +25,6 @@ const Categories = () => {
   useEffect(() => {
     getCategories();
   }, []);
-
-  const addCategory = () => {
-    const newCategory = { name };
-    axios
-      .post("http://localhost:8080/categories/add", newCategory)
-      .then((res) => {
-        getCategories();
-        // console.log(res.data);
-      })
-      .catch((err) => {
-        // console.log("Error: ", err);
-      });
-  };
   return (
     <Container>
       <h2>Categories</h2>
@@ -63,31 +49,6 @@ const Categories = () => {
         </Row>
       </ListGroup>
       <br />
-
-      <Row>
-        <Col xs="10">
-          <Label>Add a Category</Label>
-          <Input
-            type="text"
-            name="name"
-            value={name}
-            id="name"
-            placeholder="Gardening"
-            onChange={(event) => setName(event.currentTarget.value)}
-          />
-        </Col>
-        <Col xs="2">
-          <br />
-          <Button
-            block
-            color="primary"
-            className="Button"
-            onClick={addCategory}
-          >
-            Add
-          </Button>
-        </Col>
-      </Row>
     </Container>
   );
 };
