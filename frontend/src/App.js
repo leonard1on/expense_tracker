@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Spinner } from "reactstrap";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Home from "./Views/Home";

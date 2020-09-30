@@ -2,13 +2,34 @@
   text-align: center;
 }
 
-/* body {
+body {
   background-color: #f0f0ff !important;
 }
 
 tr {
   background-color: white;
-} */
+}
+
+.dropdown-menu {
+  background-color: #343a40;
+}
+
+.dropdown-item {
+  transition: 250ms;
+}
+
+.dropdown-item a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: darkslateblue;
+}
+
+.dropdown-item:hover a {
+  color: rgba(255, 255, 255, 0.75);
+}
 
 .Button {
   margin-top: 8px;
