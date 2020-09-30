@@ -39,7 +39,14 @@ const Categories = () => {
             categories.map((cat) => {
               return (
                 <Col xs="3" className="Col" key={cat._id}>
-                  <ListGroupItem key={cat._id} style={{ marginTop: "4px" }}>
+                  <ListGroupItem
+                    key={cat._id}
+                    style={{
+                      marginTop: "4px",
+                      borderRadius: "10px",
+                      borderColor: "tomato",
+                    }}
+                  >
                     {cat.name}
                   </ListGroupItem>
                 </Col>
