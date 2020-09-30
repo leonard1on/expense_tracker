@@ -39,11 +39,8 @@ const Home = () => {
       .get("http://localhost:8080/expenses/reports/" + user.sub)
       .then((res) => {
         setExpenses(
-          res.data.map((acc) => {
-            const accMonth = new Date(acc.createdAt).getMonth();
-            if (accMonth === month) {
-              return acc;
-            }
+          res.data.map((exp) => {
+            return exp;
           })
         );
       });
@@ -119,7 +116,8 @@ const Home = () => {
                   <tbody>
                     {accounts.map((acc) => {
                       const exp = expenses.find((e) => {
-                        if (e) return e.accId === acc._id;
+                        const accMonth = new Date(e.createdAt).getMonth();
+                        return e.accId === acc._id && accMonth === month;
                       });
                       return (
                         <tr key={acc._id}>
