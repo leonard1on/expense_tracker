@@ -35,20 +35,18 @@ const Home = () => {
 
   const getExpenses = () => {
     if (!isAuthenticated) return;
-    axios
-      .get("http://localhost:8080/expenses/reports/" + user.sub)
-      .then((res) => {
-        setExpenses(
-          res.data.map((exp) => {
-            return exp;
-          })
-        );
-      });
+    axios.get("/api/expenses/reports/" + user.sub).then((res) => {
+      setExpenses(
+        res.data.map((exp) => {
+          return exp;
+        })
+      );
+    });
   };
 
   const getAccounts = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+    axios.get("/api/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
         res.data.map((acc) => {
           return acc;

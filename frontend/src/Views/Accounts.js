@@ -46,7 +46,7 @@ const Accounts = () => {
     console.log(newAccount);
     newAccount.userId = user.sub;
     axios
-      .post("http://localhost:8080/accounts/add", newAccount)
+      .post("/api/accounts/add", newAccount)
       .then((res) => {
         getAccounts();
         console.log(res.data);
@@ -78,10 +78,7 @@ const Accounts = () => {
   const modifyAccount = () => {
     if (user.sub !== modAccount.userId) return;
     axios
-      .post(
-        "http://localhost:8080/accounts/update/" + modAccount._id,
-        modAccount
-      )
+      .post("/api/accounts/update/" + modAccount._id, modAccount)
       .then((res) => {
         console.log(res.data);
         getAccounts();
@@ -96,19 +93,15 @@ const Accounts = () => {
   const deleteAccount = () => {
     if (user.sub !== selectedAccount.userId || delIndex < 0) return;
 
-    axios
-      .delete("http://localhost:8080/accounts/" + selectedAccount._id)
-      .then((res) => {
-        console.log(res);
-        const refAccounts = [...accounts];
-        refAccounts.splice(delIndex, 1);
-        setAccounts(refAccounts);
-        axios
-          .delete("http://localhost:8080/expenses/uid/" + selectedAccount._id)
-          .then((exp) => {
-            console.log(exp);
-          });
+    axios.delete("/api/accounts/" + selectedAccount._id).then((res) => {
+      console.log(res);
+      const refAccounts = [...accounts];
+      refAccounts.splice(delIndex, 1);
+      setAccounts(refAccounts);
+      axios.delete("/api/expenses/uid/" + selectedAccount._id).then((exp) => {
+        console.log(exp);
       });
+    });
   };
 
   // List Account
@@ -120,7 +113,7 @@ const Accounts = () => {
 
   const getAccounts = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+    axios.get("/api/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
         res.data.map((acc) => {
           return acc;

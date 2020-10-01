@@ -11,7 +11,7 @@ const MyExpenses = () => {
 
   const getExpenses = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/expenses/uid/" + user.sub).then((res) => {
+    axios.get("/api/expenses/uid/" + user.sub).then((res) => {
       setExpenses(
         res.data.map((acc) => {
           return acc;
@@ -22,7 +22,7 @@ const MyExpenses = () => {
 
   const getAccounts = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+    axios.get("/api/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
         res.data.map((acc) => {
           return acc;
@@ -32,7 +32,7 @@ const MyExpenses = () => {
   };
 
   const getCategories = () => {
-    axios.get("http://localhost:8080/categories/").then((res) => {
+    axios.get("/api/categories/").then((res) => {
       setCategories(
         res.data.map((cat) => {
           return cat;
@@ -44,7 +44,7 @@ const MyExpenses = () => {
   const deleteExpense = (exp, index) => {
     if (exp.userId !== user.sub) return;
 
-    axios.delete("http://localhost:8080/expenses/" + exp._id).then((res) => {
+    axios.delete("/api/expenses/" + exp._id).then((res) => {
       // console.log(res);
       const refExpenses = [...expenses];
       refExpenses.splice(index, 1);

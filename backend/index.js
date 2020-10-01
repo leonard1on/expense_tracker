@@ -33,10 +33,10 @@ connection.once("open", () => {
   console.log("MongoDB successfully connected");
 });
 
-app.use("/accounts", Accounts);
-app.use("/categories", Categories);
-app.use("/users", Users);
-app.use("/expenses", Expenses);
+app.use("/api/accounts", Accounts);
+app.use("/api/categories", Categories);
+app.use("/api/users", Users);
+app.use("/api/expenses", Expenses);
 
 app.listen(PORT, () => {
   console.log("Server is running on Port: " + PORT);

@@ -13,7 +13,7 @@ import {
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const getCategories = () => {
-    axios.get("http://localhost:8080/categories/").then((res) => {
+    axios.get("/api/categories/").then((res) => {
       setCategories(
         res.data.map((cat) => {
           return cat;

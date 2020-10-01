@@ -42,7 +42,7 @@ const AddExpense = () => {
 
   const getAccounts = () => {
     if (!isAuthenticated) return;
-    axios.get("http://localhost:8080/accounts/uid/" + user.sub).then((res) => {
+    axios.get("/api/accounts/uid/" + user.sub).then((res) => {
       setAccounts(
         res.data.map((acc) => {
           return acc;
@@ -52,7 +52,7 @@ const AddExpense = () => {
   };
 
   const getCategories = () => {
-    axios.get("http://localhost:8080/categories/").then((res) => {
+    axios.get("/api/categories/").then((res) => {
       setCategories(
         res.data.map((cat) => {
           return cat;
@@ -72,39 +72,32 @@ const AddExpense = () => {
       return;
     }
     newExpense.userId = user.sub;
-    axios.post("http://localhost:8080/expenses/add", newExpense).then((exp) => {
+    axios.post("/api/expenses/add", newExpense).then((exp) => {
       const refAccount = accounts.find((acc) => acc._id === newExpense.accId);
       refAccount.money -= newExpense.amount;
       setError("");
       setSuccess(exp.data);
       // console.log(exp.data);
       axios
-        .post(
-          "http://localhost:8080/accounts/update/" + refAccount._id,
-          refAccount
-        )
+        .post("/api/accounts/update/" + refAccount._id, refAccount)
         .then((acc) => {
           // console.log(acc);
           getAccounts();
         });
 
-      axios
-        .post("http://localhost:8080/expenses/cid", newExpense)
-        .then((res) => {
-          // console.log(res);
-          if (res.data.length > 6) {
-            const refCat = categories.find(
-              (cat) => cat._id === newExpense.catId
-            );
-            setSuccess(
-              "Another purchase for " +
-                refCat.name +
-                " I see... Well it's just " +
-                newExpense.amount +
-                " less this month."
-            );
-          }
-        });
+      axios.post("/api/expenses/cid", newExpense).then((res) => {
+        // console.log(res);
+        if (res.data.length > 6) {
+          const refCat = categories.find((cat) => cat._id === newExpense.catId);
+          setSuccess(
+            "Another purchase for " +
+              refCat.name +
+              " I see... Well it's just " +
+              newExpense.amount +
+              " less this month."
+          );
+        }
+      });
 
       setNewExpense(defaultExpense);
     });
