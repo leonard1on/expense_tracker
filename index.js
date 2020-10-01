@@ -38,6 +38,10 @@ app.use("/api/categories", Categories);
 app.use("/api/users", Users);
 app.use("/api/expenses", Expenses);
 
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 app.listen(PORT, () => {
   console.log("Server is running on Port: " + PORT);
 });
