@@ -43,16 +43,16 @@ const Accounts = () => {
   };
 
   const createAccount = () => {
-    console.log(newAccount);
+    //console.log(newAccount);
     newAccount.userId = user.sub;
     axios
       .post("/api/accounts/add", newAccount)
       .then((res) => {
         getAccounts();
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        console.log("Error: ", err);
+        //console.log("Error: ", err);
       });
   };
 
@@ -80,7 +80,7 @@ const Accounts = () => {
     axios
       .post("/api/accounts/update/" + modAccount._id, modAccount)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         getAccounts();
       });
   };
@@ -94,12 +94,12 @@ const Accounts = () => {
     if (user.sub !== selectedAccount.userId || delIndex < 0) return;
 
     axios.delete("/api/accounts/" + selectedAccount._id).then((res) => {
-      console.log(res);
+      //console.log(res);
       const refAccounts = [...accounts];
       refAccounts.splice(delIndex, 1);
       setAccounts(refAccounts);
       axios.delete("/api/expenses/uid/" + selectedAccount._id).then((exp) => {
-        console.log(exp);
+        //console.log(exp);
       });
     });
   };
