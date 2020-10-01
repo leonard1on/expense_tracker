@@ -7,6 +7,7 @@ This proyect was made as part of the application process from Acklen Avenue. It 
 git clone https://github.com/leonard1on/acklen-challenge
 heroku login
 heroku create <project-name>
+git push heroku master
 ```
 
 ## Bugs :bug:
