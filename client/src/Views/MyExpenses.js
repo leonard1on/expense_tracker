@@ -82,10 +82,11 @@ const MyExpenses = () => {
           <tbody>
             {expenses.map((exp, index) => {
               const refAcc = accounts.find((acc) => acc._id === exp.accId);
+              const refCat = categories.find((cat) => cat_id === exp.catId);
               return (
                 <tr key={exp._id}>
                   <td>{refAcc ? refAcc.name : null}</td>
-                  <td>{refAcc ? refAcc.name : null}</td>
+                  <td>{refCat ? refCat.name : null}</td>
                   <td>{exp.amount}</td>
                   <td>{exp.description}</td>
                   <td>
