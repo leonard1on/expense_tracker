@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+const path = require("path");
 require("dotenv").config();
 
 const Accounts = require("./routes/accounts");
@@ -11,10 +12,14 @@ const Users = require("./routes/users");
 const Expenses = require("./routes/expenses");
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(bodyParser.json());
 
 const uri = process.env.URI;
