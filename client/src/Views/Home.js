@@ -56,11 +56,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getExpenses();
-  }, [month]);
-
-  useEffect(() => {
     getAccounts();
+    getExpenses();
   }, []);
 
   return (
