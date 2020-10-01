@@ -13,5 +13,4 @@ git push heroku master
 ## Bugs :bug:
 If there is a problem with the app, please create a bug report in the issues section
 
-## License :scroll:
-- Licensed under [Repo's Licens](https://github.com/leonard1on/acklen-challenge/blob/master/License)
+## Happy Coding :computer:
